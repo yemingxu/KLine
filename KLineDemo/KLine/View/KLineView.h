@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "KLChartView.h"
 
+
 @interface KLineView : UIView
 
 @property (nonatomic,strong,readonly) KLChartView *chartView;
+
 
 @end

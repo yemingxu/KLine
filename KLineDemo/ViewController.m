@@ -14,7 +14,7 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
 {
     
     KLEntry *e = [[KLEntry alloc] init];
-    e.timestamp = [NSString stringWithFormat:@"t_%i",index];
+    e.timestamp = [NSString stringWithFormat:@"%f",[rawObject[0] doubleValue]];
     e.vol = [rawObject[1] floatValue];
     e.open = [rawObject[2] floatValue] * 100.0;;
     e.close = [rawObject[5] floatValue] * 100.0;;
@@ -70,7 +70,7 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
     dispatch_source_set_event_handler(timer, ^{
         if (self_weak == nil) return ;
 //        return;
-        if (currentIdx >= self_weak.jsonObject.count){
+        if (currentIdx >= self_weak.jsonObject.count-1){
             dispatch_cancel(timer);
             return;
         }

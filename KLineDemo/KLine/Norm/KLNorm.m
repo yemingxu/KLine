@@ -149,23 +149,24 @@
     CandleChartDataSet *set = [[CandleChartDataSet alloc] init];
     set.axisDependency = AxisDependencyRight;
     set.highlightEnabled = NO;
-    [set setColor:kGoUpColor];
+    [set setColor:KLGoUpColor];
     //这是用于显示最高最低值区间的立线
-    set.shadowColor = kGoUpColor;
+    set.shadowColor = KLGoUpColor;
     set.shadowColorSameAsCandle = YES;
     //不在面板上直接显示数值
     set.drawValuesEnabled = NO;
     // 立线的宽度
     set.shadowWidth = 1;
     // close >= open
-    set.increasingColor = kGoUpColor;
+    set.increasingColor = KLGoUpColor;
     // 内部是否充满颜色
     set.decreasingFilled = true;
     // open > close
-    set.decreasingColor = kGoDownColor;
+    set.decreasingColor = KLGoDownColor;
     
     // 内部是否充满颜色
     set.increasingFilled = true;
+    set.barSpace = KLBarSpaceValue/2.0;
     
     return set;
 }

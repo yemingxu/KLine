@@ -22,10 +22,15 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     /// the maximum number of entries to which values will be drawn
     /// (entry numbers greater than this value will cause value-labels to disappear)
     @objc internal var _maxVisibleCount = 100
-    
+    @objc internal var maxVisibleBarWidthPixel: CGFloat = 15.0{
+        didSet{
+            
+        }
+    }
+
     /// flag that indicates if auto scaling on the y axis is enabled
     fileprivate var _autoScaleMinMaxEnabled = false
-    
+
     fileprivate var _pinchZoomEnabled = false
     fileprivate var _doubleTapToZoomEnabled = true
     fileprivate var _dragXEnabled = true
@@ -650,6 +655,11 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
                     matrix = matrix.translatedBy(x: -location.x, y: -location.y)
                     
                     matrix = _viewPortHandler.touchMatrix.concatenating(matrix)
+                    
+                    let limitWidth = CGSize(width: 1, height: 1).applying(matrix).width;
+                    if limitWidth > maxVisibleBarWidthPixel{
+                        return;
+                    }
                     
                     let _ = _viewPortHandler.refresh(newMatrix: matrix, chart: self, invalidate: true)
                     

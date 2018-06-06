@@ -25,6 +25,7 @@
 @property (nonatomic,strong,readonly) id<KLNorm> fixedNorm;
 @property (nonatomic,strong,readonly) NSArray<id<KLNorm>> *mainNorms;
 @property (nonatomic,strong,readonly) NSArray<id<KLNorm>> *helpNorms;
+@property (nonatomic,strong,readonly) KLCalculatedResult *calcResult;
 
 - (void)addEntry:(KLEntry *)e;
 

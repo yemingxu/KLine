@@ -164,6 +164,7 @@
 		12511A7220B70AC0008ACE20 /* KLineDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 12511A7120B70AC0008ACE20 /* KLineDemoTests.m */; };
 		128AE68320BFDF9500340A7B /* KLKDJNorm.m in Sources */ = {isa = PBXBuildFile; fileRef = 128AE68220BFDF9500340A7B /* KLKDJNorm.m */; };
 		128AE68620BFECB600340A7B /* KLRSINorm.m in Sources */ = {isa = PBXBuildFile; fileRef = 128AE68520BFECB600340A7B /* KLRSINorm.m */; };
+		1295C25220C77FD000C37E61 /* KLXAxisValuesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1295C25120C77FD000C37E61 /* KLXAxisValuesFormatter.m */; };
 		129A59A220BCED7400055AA8 /* KLNormConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 129A59A120BCED7400055AA8 /* KLNormConfiguration.m */; };
 		129A59A520BCEF0100055AA8 /* KLChartDataVisible.m in Sources */ = {isa = PBXBuildFile; fileRef = 129A59A420BCEF0100055AA8 /* KLChartDataVisible.m */; };
 		129A59A920BD28E000055AA8 /* JSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 129A59A620BD28E000055AA8 /* JSON.json */; };
@@ -365,6 +366,8 @@
 		128AE68220BFDF9500340A7B /* KLKDJNorm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLKDJNorm.m; sourceTree = "<group>"; };
 		128AE68420BFECB600340A7B /* KLRSINorm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLRSINorm.h; sourceTree = "<group>"; };
 		128AE68520BFECB600340A7B /* KLRSINorm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLRSINorm.m; sourceTree = "<group>"; };
+		1295C25020C77FD000C37E61 /* KLXAxisValuesFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLXAxisValuesFormatter.h; sourceTree = "<group>"; };
+		1295C25120C77FD000C37E61 /* KLXAxisValuesFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLXAxisValuesFormatter.m; sourceTree = "<group>"; };
 		129A59A020BCED7400055AA8 /* KLNormConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLNormConfiguration.h; sourceTree = "<group>"; };
 		129A59A120BCED7400055AA8 /* KLNormConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLNormConfiguration.m; sourceTree = "<group>"; };
 		129A59A320BCEF0100055AA8 /* KLChartDataVisible.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLChartDataVisible.h; sourceTree = "<group>"; };
@@ -787,11 +790,21 @@
 				120C4F4320BBCC8900E30E8E /* KLSwiftDefines.h */,
 				120C4F4420BBCCB100E30E8E /* KLUtilDefines.h */,
 				120C4F4720BBCD3C00E30E8E /* View */,
+				1295C24F20C77F9300C37E61 /* Formatters */,
 				120C4F4820BBCD4000E30E8E /* Norm */,
 				12231C0120BE844D00B0E114 /* Calculater */,
 				120C4F4920BBCDCB00E30E8E /* Data */,
 			);
 			path = KLine;
+			sourceTree = "<group>";
+		};
+		1295C24F20C77F9300C37E61 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				1295C25020C77FD000C37E61 /* KLXAxisValuesFormatter.h */,
+				1295C25120C77FD000C37E61 /* KLXAxisValuesFormatter.m */,
+			);
+			path = Formatters;
 			sourceTree = "<group>";
 		};
 		12D96BD320B7A4A0009DE067 /* Frameworks */ = {
@@ -913,6 +926,7 @@
 				129A59A520BCEF0100055AA8 /* KLChartDataVisible.m in Sources */,
 				120C4EF920BBCC5200E30E8E /* IFillFormatter.swift in Sources */,
 				120C4F1220BBCC5200E30E8E /* AnimatedMoveViewJob.swift in Sources */,
+				1295C25220C77FD000C37E61 /* KLXAxisValuesFormatter.m in Sources */,
 				120C4EBD20BBCC5200E30E8E /* DataApproximator.swift in Sources */,
 				128AE68320BFDF9500340A7B /* KLKDJNorm.m in Sources */,
 				120C4F0D20BBCC5200E30E8E /* AnimatedZoomViewJob.swift in Sources */,

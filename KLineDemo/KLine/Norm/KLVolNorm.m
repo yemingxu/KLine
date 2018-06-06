@@ -7,6 +7,7 @@
 //
 
 #import "KLVolNorm.h"
+#import "KLUtilDefines.h"
 
 @interface KLVolNorm()
 {
@@ -23,6 +24,13 @@
         
         BarChartDataSet *set = [self.class generateBasalBarChartDataSet];
         [set setValues:calcResult.vol];
+        
+        NSMutableArray *tmp_colors = [NSMutableArray arrayWithCapacity:calcResult.vol.count];
+        for (int i = 0;i<calcResult.vol.count;i++) {
+            tmp_colors[i] = [self __BAR_Color:calcResult.entries[i]];
+        }
+        [set setColors:tmp_colors];
+        
         _volLineSet = set;
         [self addBarSet:set];
         
@@ -38,9 +46,15 @@
     if ([calcResult vol].count && _volLineSet){
         
         [_volLineSet addEntry:calcResult.vol.lastObject];
-        
+        [_volLineSet addColor:[self __BAR_Color:calcResult.entries.lastObject]];
     }
 }
 
 #pragma clang diagnostic pop
+
+
+- (UIColor *)__BAR_Color:(KLEntry *)e
+{
+    return (e.open > e.close) ? KLGoDownColor : KLGoUpColor;
+}
 @end

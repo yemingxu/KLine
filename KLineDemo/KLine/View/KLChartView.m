@@ -9,6 +9,7 @@
 #import "KLChartView.h"
 #import "KLSwiftDefines.h"
 #import "KLUtilDefines.h"
+#import "KLXAxisValuesFormatter.h"
 
 static int kKLMinVisibleEntryCount = 20;
 
@@ -84,12 +85,37 @@ static int kKLMinVisibleEntryCount = 20;
 {
     self.mainChartView.data = dataVisible.mainChartData;
     self.helpChartView.data = dataVisible.helpChartData;
+    
+    [self.mainChartView zoomWithScaleX:KLBarVisibleMaxWidthPixel
+                                scaleY:0.0
+                                xValue:self.mainChartView.chartXMax
+                                yValue:0
+                                  axis:AxisDependencyRight];
+    [self syncChartsByTouchView:self.mainChartView];
 }
 
 - (void)dataVisibleRefreshedForAddEntry:(KLChartDataVisible *)dataVisible
 {
-    self.mainChartView.data = dataVisible.mainChartData;
-    self.helpChartView.data = dataVisible.helpChartData;
+    if (self.mainChartView.data){
+        [self.mainChartView notifyDataSetChanged];
+    }else{
+        self.mainChartView.data = dataVisible.mainChartData;
+    }
+    if (self.helpChartView.data){
+        [self.helpChartView notifyDataSetChanged];
+    }else{
+        self.helpChartView.data = dataVisible.helpChartData;
+    }
+    
+//    ChartViewPortHandler *vpHandler = self.mainChartView.viewPortHandler;
+//    CGAffineTransform originalMatrix = vpHandler.touchMatrix;
+//
+//    CGFloat translationX = CGSizeApplyAffineTransform((CGSize){1,1}, originalMatrix).width * -1.0;
+//    CGAffineTransform matrix = CGAffineTransformMakeTranslation(translationX, 0);
+//    matrix = CGAffineTransformConcat(matrix,originalMatrix);
+//    matrix = [vpHandler refreshWithNewMatrix:matrix chart:self.mainChartView invalidate:true];
+//    [self syncChartsByTouchView:self.mainChartView];
+
 }
 - (void)dataVisibleRefreshedOfMainForNormChanged:(KLChartDataVisible *)dataVisible dataIsReset:(BOOL)dataIsReset
 {
@@ -107,7 +133,6 @@ static int kKLMinVisibleEntryCount = 20;
     self.helpChartView.data = dataVisible.helpChartData;
 }
 
-
 #pragma mark - 公有
 
 //高度
@@ -121,12 +146,17 @@ static int kKLMinVisibleEntryCount = 20;
 #pragma mark - 私有
 - (void)__loadUI
 {
-    [self addSubview:self.mainChartView];
+    _mainChartView = [[CombinedChartView alloc] initWithFrame:self.bounds];
+    [self __initializeChartView:_mainChartView];
+    
+    [self addSubview:_mainChartView];
     [self __layoutChartFrame];
 }
 
 - (void)__layoutChartFrame
 {
+    if (_mainChartView == nil) return;
+    
     CGSize self_size = self.bounds.size;
     
     if (_needShowHelpChart){
@@ -164,23 +194,13 @@ static int kKLMinVisibleEntryCount = 20;
 }
 
 
-#pragma mark - Lazy
-- (CombinedChartView *)mainChartView
-{
-    if (!_mainChartView) {
-        CombinedChartView *chartView = [[CombinedChartView alloc] initWithFrame:self.bounds];
-        [self __initializeChartView:chartView];
-        _mainChartView = chartView;
-    }
-    return _mainChartView;
-}
+#pragma mark - 
 
 - (void)__initializeChartView:(CombinedChartView *)chartView
 {
-    UIColor *grayColor = YMUIColorHex(0x131f30);
+    UIColor *grayColor = KLUIColorHex(0x131f30);
     chartView.extraTopOffset = 20.0;
     //    [chartView setExtraOffsetsWithLeft:0 top:10 right:0 bottom:0];
-    
     //如果需要显示选中图表位置进行数据展示 需要设置代理 可选项
     chartView.delegate = self;
     chartView.backgroundColor = grayColor;
@@ -204,6 +224,7 @@ static int kKLMinVisibleEntryCount = 20;
     [self setupYAxis:chartView.rightAxis];
     chartView.leftAxis.enabled = NO;
     
+    chartView.maxVisibleBarWidthPixel = KLBarVisibleMaxWidthPixel;
 }
 
 - (void)setupXAxis:(ChartXAxis *)xAxis
@@ -218,6 +239,8 @@ static int kKLMinVisibleEntryCount = 20;
     xAxis.drawLabelsEnabled = YES;
     xAxis.labelTextColor = [UIColor whiteColor];
     
+    xAxis.valueFormatter = [[KLXAxisValuesFormatter alloc] initWithDataHolder:_dataHolder];
+    
 }
 - (void)setupYAxis:(ChartYAxis *)yAxis
 {
@@ -231,7 +254,7 @@ static int kKLMinVisibleEntryCount = 20;
     //label位置
     yAxis.labelPosition = YAxisLabelPositionInsideChart;
     //文字颜色
-    yAxis.labelTextColor = kWeakBlackColor;
+    yAxis.labelTextColor = KLWeakBlackColor;
     //文字字体
     yAxis.labelFont = [UIFont systemFontOfSize:10];
     

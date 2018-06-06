@@ -132,8 +132,8 @@ open class ChartDataSet: ChartBaseDataSet
 
         }
         
-        guard let candleSet = self as? CandleChartDataSet
-            else { return }
+//        guard let candleSet = self as? CandleChartDataSet
+//            else { return }
 //        print(". \(candleSet.indexOfYMin) : \(candleSet.yMin) . \(candleSet.indexOfYMax) : \(candleSet.yMax) .");
     }
     

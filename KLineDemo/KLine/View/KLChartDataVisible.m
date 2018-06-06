@@ -7,6 +7,7 @@
 //
 
 #import "KLChartDataVisible.h"
+#import "KLUtilDefines.h"
 
 @interface KLChartDataVisible()<KLChartDataHolderDelegate>
 @end
@@ -143,6 +144,7 @@
     if (barSets.count){
         if (!disposeData.barData){
             disposeData.barData = [[BarChartData alloc] initWithDataSets:barSets];
+            disposeData.barData.barWidth = 1.0 - KLBarSpaceValue;
         }else{
             [disposeData.barData setDataSets:barSets];
         }

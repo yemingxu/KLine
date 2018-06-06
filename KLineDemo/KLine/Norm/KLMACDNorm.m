@@ -91,6 +91,6 @@
 
 - (UIColor *)__MACDBAR_Color:(BarChartDataEntry *)e
 {
-    return e.y <= 0.0 ? kGoDownColor : kGoUpColor;
+    return e.y <= 0.0 ? KLGoDownColor : KLGoUpColor;
 }
 @end

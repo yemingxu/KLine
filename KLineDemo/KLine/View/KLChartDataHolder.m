@@ -16,7 +16,7 @@
     
     
 }
-@property (nonatomic,strong) KLCalculatedResult *calcResult;
+@property (nonatomic,strong,readwrite) KLCalculatedResult *calcResult;
 
 @end
 

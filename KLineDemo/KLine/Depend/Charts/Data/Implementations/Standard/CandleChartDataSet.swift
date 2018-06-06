@@ -73,12 +73,11 @@ open class CandleChartDataSet: LineScatterCandleRadarChartDataSet, ICandleChartD
             _yMax = e.low
         }
         
-        let index: Int = entryIndex(entry: e);
         if _yMin == e.low{
-            _indexOfYMin = index;
+            _indexOfYMin = entryIndex(entry: e);
         }
         if _yMax == e.high{
-            _indexOfYMax = index;
+            _indexOfYMax = entryIndex(entry: e);
         }
     }
     
@@ -87,7 +86,7 @@ open class CandleChartDataSet: LineScatterCandleRadarChartDataSet, ICandleChartD
     /// the space between the candle entries
     ///
     /// **default**: 0.1 (10%)
-    fileprivate var _barSpace = CGFloat(0.1)
+    fileprivate var _barSpace = CGFloat(0.15)
     
     /// the space that is left out on the left and right side of each candle,
     /// **default**: 0.1 (10%), max 0.45, min 0.0
