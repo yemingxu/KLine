@@ -39,7 +39,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #define KLLineWidthValue ((CGFloat)1.0)
 #define KLBarSpaceValue ((CGFloat)0.3)
-#define KLBarVisibleMaxWidthPixel ((CGFloat)20.0)
+#define KLBarVisibleMaxWidthPixel ((CGFloat)15.0)
 
 
 #endif /* KLUtilDefines_h */

@@ -45,11 +45,6 @@ open class CandleChartDataSet: LineScatterCandleRadarChartDataSet, ICandleChartD
         
         calcMinMaxX(entry: e)
     }
-    
-    private var _indexOfYMax: Int = 0;
-    private var _indexOfYMin: Int = 0;
-    @objc open var indexOfYMax: Int{return _indexOfYMax;}
-    @objc open var indexOfYMin: Int{return _indexOfYMin;}
     open override func calcMinMaxY(entry e: ChartDataEntry)
     {
         guard let e = e as? CandleChartDataEntry
@@ -71,13 +66,6 @@ open class CandleChartDataSet: LineScatterCandleRadarChartDataSet, ICandleChartD
         if e.low > _yMax
         {
             _yMax = e.low
-        }
-        
-        if _yMin == e.low{
-            _indexOfYMin = entryIndex(entry: e);
-        }
-        if _yMax == e.high{
-            _indexOfYMax = entryIndex(entry: e);
         }
     }
     

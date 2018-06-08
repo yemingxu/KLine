@@ -72,8 +72,8 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
         
         context.setLineWidth(dataSet.shadowWidth)
         
-        let indexOfYMax = (dataSet as? CandleChartDataSet)?.indexOfYMax ?? -1;
-        let indexOfYMin = (dataSet as? CandleChartDataSet)?.indexOfYMin ?? -1;
+        let indexOfYMax = (dataSet as? CandleChartDataSet)?.indexVisibleYMax ?? -1;
+        let indexOfYMin = (dataSet as? CandleChartDataSet)?.indexVisibleYMin ?? -1;
 
 
         
@@ -257,9 +257,8 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
         
         var yMaxDrawPoint: CGPoint? = _yMaxDrawPoint;
         var yMinDrawPoint: CGPoint? = _yMinDrawPoint;
-        if let _ = yMinDrawPoint{
-            
-            let text = String(format: "%.5f", dataSet.yMin);
+        if let _ = yMinDrawPoint,let _dataSet = dataSet as? CandleChartDataSet{
+            let text = String(format: "%.5f", _dataSet.visibleYMin);
             var drawText = ("——\(text)" as NSString);
             let limitRect = viewPortHandler!.contentRect;
             let textSize = drawText.boundingRect(with: limitRect.size, options: .usesLineFragmentOrigin, attributes: attr, context: nil).size;
@@ -270,8 +269,8 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
             yMinDrawPoint?.y -= textSize.height/2.0;
             drawText.draw(at: yMinDrawPoint!, withAttributes: attr);
         }
-        if let _ = yMaxDrawPoint{
-            let text = String(format: "%.5f", dataSet.yMax);
+        if let _ = yMaxDrawPoint,let _dataSet = dataSet as? CandleChartDataSet{
+            let text = String(format: "%.5f", _dataSet.visibleYMax);
             var drawText = ("——\(text)" as NSString);
             let limitRect = viewPortHandler!.contentRect;
             let textSize = drawText.boundingRect(with: limitRect.size, options: .usesLineFragmentOrigin, attributes: attr, context: nil).size;

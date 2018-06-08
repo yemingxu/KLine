@@ -107,14 +107,7 @@ static int kKLMinVisibleEntryCount = 20;
         self.helpChartView.data = dataVisible.helpChartData;
     }
     
-//    ChartViewPortHandler *vpHandler = self.mainChartView.viewPortHandler;
-//    CGAffineTransform originalMatrix = vpHandler.touchMatrix;
-//
-//    CGFloat translationX = CGSizeApplyAffineTransform((CGSize){1,1}, originalMatrix).width * -1.0;
-//    CGAffineTransform matrix = CGAffineTransformMakeTranslation(translationX, 0);
-//    matrix = CGAffineTransformConcat(matrix,originalMatrix);
-//    matrix = [vpHandler refreshWithNewMatrix:matrix chart:self.mainChartView invalidate:true];
-//    [self syncChartsByTouchView:self.mainChartView];
+    [self syncChartsByTouchView:self.mainChartView];
 
 }
 - (void)dataVisibleRefreshedOfMainForNormChanged:(KLChartDataVisible *)dataVisible dataIsReset:(BOOL)dataIsReset

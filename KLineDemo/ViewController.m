@@ -56,17 +56,17 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
     _jsonObject = [YMJSONObject getObjects];
     
     NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:_jsonObject.count];
-    for (int i = 0; i<_jsonObject.count/2.0; i++) {
+    for (int i = 0; i<_jsonObject.count/3.0; i++) {
         NSArray *rawObject = _jsonObject[i];
         tmp[i] = __convertEntry(rawObject,i);
     }
     [_chartView.dataHolder setEntries:tmp];
     [self.view addSubview:_chartView];
     
-    __block int currentIdx = _jsonObject.count/2.0;
+    __block int currentIdx = _jsonObject.count/3.0;
     __weak typeof(self) self_weak = self;
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 60.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);
     dispatch_source_set_event_handler(timer, ^{
         if (self_weak == nil) return ;
 //        return;

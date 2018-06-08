@@ -109,6 +109,18 @@ open class ChartDataSet: ChartBaseDataSet
         }
     }
     
+    private var _indexVisibleYMax: Int = 0;
+    @objc open var indexVisibleYMax: Int{return _indexVisibleYMax;}
+    
+    private var _indexVisibleYMin: Int = 0;
+    @objc open var indexVisibleYMin: Int{return _indexVisibleYMin;}
+    
+    private var _visibleYMax: Double = 0;
+    @objc open var visibleYMax: Double{return _visibleYMax;}
+    
+    private var _visibleYMin: Double = 0;
+    @objc open var visibleYMin: Double{return _visibleYMin;}
+    
     open override func calcMinMaxY(fromX: Double, toX: Double)
     {
         if _values.count == 0
@@ -124,17 +136,44 @@ open class ChartDataSet: ChartBaseDataSet
         if indexTo < indexFrom { return }
         
 
+        let visibleIndexFrom = (indexFrom <= 0 ? indexFrom : indexFrom+1);
+        let visibleIndexTo = (indexTo >= entryCount-1 ? indexTo : indexTo-1);        
 
-        for i in indexFrom...indexTo
+        for i in visibleIndexFrom...visibleIndexTo
         {
+            let e:ChartDataEntry = _values[i]
             // only recalculate y
-            calcMinMaxY(entry: _values[i])
-
+            calcMinMaxY(entry: e)
+            
+            guard let _e = e as? CandleChartDataEntry
+                else { continue; }
+            if _yMin == _e.low{
+                _indexVisibleYMin = i;
+            }
+            if _yMax == _e.high{
+                _indexVisibleYMax = i;
+            }
+            
         }
+        //此时的最大最小值为 可视区域的最大最小值
+        _visibleYMax = _yMax;
+        _visibleYMin = _yMin;
         
-//        guard let candleSet = self as? CandleChartDataSet
-//            else { return }
-//        print(". \(candleSet.indexOfYMin) : \(candleSet.yMin) . \(candleSet.indexOfYMax) : \(candleSet.yMax) .");
+        
+        if indexFrom != visibleIndexFrom{
+            calcMinMaxY(entry: _values[indexFrom])
+        }
+        if indexTo != visibleIndexTo{
+            calcMinMaxY(entry: _values[indexTo])
+        }
+
+        
+//        for i in indexFrom...indexTo
+//        {
+//            // only recalculate y
+//            calcMinMaxY(entry: _values[i])
+//
+//        }
     }
     
     @objc open func calcMinMaxX(entry e: ChartDataEntry)
