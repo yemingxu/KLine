@@ -531,6 +531,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         {
             return
         }
+        self.delegate?.chartWillDisplay?(self);
+
         
         if recognizer.state == NSUIGestureRecognizerState.ended
         {
@@ -557,7 +559,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         {
             return
         }
-        
+        self.delegate?.chartWillDisplay?(self);
+
         if recognizer.state == NSUIGestureRecognizerState.ended
         {
             if _data !== nil && _doubleTapToZoomEnabled && (data?.entryCount ?? 0) > 0
@@ -584,6 +587,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     {
         if recognizer.state == NSUIGestureRecognizerState.began
         {
+            self.delegate?.chartWillDisplay?(self);
+
             stopDeceleration()
             
             if _data !== nil &&
@@ -679,6 +684,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     {
         if recognizer.state == NSUIGestureRecognizerState.began && recognizer.nsuiNumberOfTouches() > 0
         {
+            self.delegate?.chartWillDisplay?(self);
+
             stopDeceleration()
             
             if _data === nil || !self.isDragEnabled

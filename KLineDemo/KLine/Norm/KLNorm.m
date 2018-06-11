@@ -125,7 +125,7 @@
     set.drawCirclesEnabled = NO;
     set.circleRadius = 1.0f;
     set.circleHoleRadius = 1.0f;
-    set.highlightEnabled = NO;
+//    set.highlightEnabled = NO;
     set.valueFont = [UIFont systemFontOfSize:12];
     set.mode = LineChartModeLinear;
 //    set.drawFilledEnabled = ([algorithmKey isEqual:_mainLineAlgorithm]); // 是否显示折线图阴影
@@ -137,7 +137,7 @@
     BarChartDataSet *set = [[BarChartDataSet alloc] init];
     set.axisDependency = AxisDependencyRight;
     set.drawValuesEnabled = NO;
-    set.highlightEnabled = NO;
+//    set.highlightEnabled = NO;
     set.valueFont = [UIFont systemFontOfSize:12];
     
     return set;
@@ -148,7 +148,7 @@
     // Candle
     CandleChartDataSet *set = [[CandleChartDataSet alloc] init];
     set.axisDependency = AxisDependencyRight;
-    set.highlightEnabled = NO;
+//    set.highlightEnabled = NO;
     [set setColor:KLGoUpColor];
     //这是用于显示最高最低值区间的立线
     set.shadowColor = KLGoUpColor;

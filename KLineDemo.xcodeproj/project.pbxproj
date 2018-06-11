@@ -171,6 +171,7 @@
 		129A59AA20BD28E000055AA8 /* YMJSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 129A59A820BD28E000055AA8 /* YMJSONObject.m */; };
 		129A59AD20BD495B00055AA8 /* KLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 129A59AC20BD495B00055AA8 /* KLineView.m */; };
 		12D96BD520B7A4A0009DE067 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D96BD420B7A4A0009DE067 /* CoreGraphics.framework */; };
+		12E16EDF20CE99D600711771 /* KLChartMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E16EDE20CE99D600711771 /* KLChartMaskView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -378,6 +379,8 @@
 		129A59AB20BD495B00055AA8 /* KLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLineView.h; sourceTree = "<group>"; };
 		129A59AC20BD495B00055AA8 /* KLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLineView.m; sourceTree = "<group>"; };
 		12D96BD420B7A4A0009DE067 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		12E16EDD20CE99D600711771 /* KLChartMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLChartMaskView.h; sourceTree = "<group>"; };
+		12E16EDE20CE99D600711771 /* KLChartMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KLChartMaskView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -675,6 +678,8 @@
 				129A59AC20BD495B00055AA8 /* KLineView.m */,
 				120C4F6520BBE5C800E30E8E /* KLChartView.h */,
 				120C4F6620BBE5C800E30E8E /* KLChartView.m */,
+				12E16EDD20CE99D600711771 /* KLChartMaskView.h */,
+				12E16EDE20CE99D600711771 /* KLChartMaskView.m */,
 				129A59A020BCED7400055AA8 /* KLNormConfiguration.h */,
 				129A59A120BCED7400055AA8 /* KLNormConfiguration.m */,
 				120C4F6820BBE5E600E30E8E /* KLChartDataHolder.h */,
@@ -987,6 +992,7 @@
 				120C4F3020BBCC5200E30E8E /* IPieChartDataSet.swift in Sources */,
 				120C4F0920BBCC5200E30E8E /* XAxis.swift in Sources */,
 				120C4F3520BBCC5200E30E8E /* ILineRadarChartDataSet.swift in Sources */,
+				12E16EDF20CE99D600711771 /* KLChartMaskView.m in Sources */,
 				120C4F5E20BBDD4500E30E8E /* KLFixedNorm.m in Sources */,
 				120C4F6120BBE3F600E30E8E /* KLMANorm.m in Sources */,
 				120C4F0C20BBCC5200E30E8E /* ComponentBase.swift in Sources */,

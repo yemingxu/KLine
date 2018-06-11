@@ -37,6 +37,7 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
 @property (strong, nonatomic) IBOutlet UIButton *KDJButton;
 @property (strong, nonatomic) IBOutlet UIButton *RSIButton;
 
+@property (strong, nonatomic) UIScrollView *scrollView;
 
 @end
 
@@ -46,6 +47,9 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     // Do any additional setup after loading the view.
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView.contentSize = (CGSize){self.view.frame.size.width,self.view.frame.size.height*2.0};
+//    [self.view addSubview:_scrollView];
     
     CGRect chartFrame = (CGRect){
         0,
@@ -80,11 +84,11 @@ static inline KLEntry *__convertEntry(NSArray *rawObject,int index)
     });
     dispatch_resume(timer);
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(__tapClicked:)];
-    [self.view addGestureRecognizer:tap];
+//    UILongPressGestureRecognizer *tap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(__tapClicked:)];
+//    [self.view addGestureRecognizer:tap];
     
 }
-- (void)__tapClicked:(UITapGestureRecognizer *)tap
+- (void)__tapClicked:(UILongPressGestureRecognizer *)tap
 {
     
 //    if (self.chartView.dataHandler.selectedOtherNorm){

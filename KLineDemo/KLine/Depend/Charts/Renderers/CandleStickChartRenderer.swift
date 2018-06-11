@@ -255,34 +255,25 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
         let attr = [NSAttributedStringKey.foregroundColor: UIColor.white,
                     NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)];
         
-        var yMaxDrawPoint: CGPoint? = _yMaxDrawPoint;
-        var yMinDrawPoint: CGPoint? = _yMinDrawPoint;
-        if let _ = yMinDrawPoint,let _dataSet = dataSet as? CandleChartDataSet{
-            let text = String(format: "%.5f", _dataSet.visibleYMin);
-            var drawText = ("——\(text)" as NSString);
-            let limitRect = viewPortHandler!.contentRect;
-            let textSize = drawText.boundingRect(with: limitRect.size, options: .usesLineFragmentOrigin, attributes: attr, context: nil).size;
-            if yMinDrawPoint!.x + textSize.width > limitRect.size.width{
-                yMinDrawPoint!.x -= textSize.width;
-                drawText = ("\(text)——" as NSString);
+        if let _dataSet = dataSet as? CandleChartDataSet{
+            
+            func drawMaxMin(p:CGPoint,number:Double,vp: ViewPortHandler) -> Void
+            {
+                var _p = p;
+                let text = String(format: "%.5f", number);
+                var drawText = ("——\(text)" as NSString);
+                let limitRect = vp.contentRect;
+                let textSize = drawText.boundingRect(with: limitRect.size, options: .usesLineFragmentOrigin, attributes: attr, context: nil).size;
+                if _p.x + textSize.width > limitRect.size.width{
+                    _p.x -= textSize.width;
+                    drawText = ("\(text)——" as NSString);
+                }
+                _p.y -= textSize.height/2.0;
+                drawText.draw(at: _p, withAttributes: attr);
             }
-            yMinDrawPoint?.y -= textSize.height/2.0;
-            drawText.draw(at: yMinDrawPoint!, withAttributes: attr);
+            drawMaxMin(p: _yMaxDrawPoint, number: _dataSet.visibleYMax, vp: viewPortHandler!)
+            drawMaxMin(p: _yMinDrawPoint, number: _dataSet.visibleYMin, vp: viewPortHandler!)
         }
-        if let _ = yMaxDrawPoint,let _dataSet = dataSet as? CandleChartDataSet{
-            let text = String(format: "%.5f", _dataSet.visibleYMax);
-            var drawText = ("——\(text)" as NSString);
-            let limitRect = viewPortHandler!.contentRect;
-            let textSize = drawText.boundingRect(with: limitRect.size, options: .usesLineFragmentOrigin, attributes: attr, context: nil).size;
-            if yMaxDrawPoint!.x + textSize.width > limitRect.size.width{
-                yMaxDrawPoint!.x -= textSize.width;
-                drawText = ("\(text)——" as NSString);
-            }
-            yMaxDrawPoint?.y -= textSize.height/2.0;
-
-            drawText.draw(at: yMaxDrawPoint!, withAttributes: attr);
-        }
-
         
         context.restoreGState()
     }

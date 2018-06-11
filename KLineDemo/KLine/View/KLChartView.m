@@ -10,13 +10,13 @@
 #import "KLSwiftDefines.h"
 #import "KLUtilDefines.h"
 #import "KLXAxisValuesFormatter.h"
-
-static int kKLMinVisibleEntryCount = 20;
+#import "KLChartMaskView.h"
 
 @interface KLChartView()<ChartViewDelegate,KLChartDataVisibleDelegate>
 {
     BOOL _needShowHelpChart;
     
+    KLChartMaskView *_maskView;
 }
 
 @property (nonatomic,strong) CombinedChartView *mainChartView;//主图
@@ -36,6 +36,10 @@ static int kKLMinVisibleEntryCount = 20;
     if (self){
         [self __initialize];
         [self __loadUI];
+        
+        
+        UILongPressGestureRecognizer *longGes = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(__longGesture:)];
+        [self.mainChartView addGestureRecognizer:longGes];
     }
     return self;
 }
@@ -46,12 +50,20 @@ static int kKLMinVisibleEntryCount = 20;
     _dataVisible = [[KLChartDataVisible alloc] init];
     [_dataVisible prepareWithDataHolder:_dataHolder];
     _dataVisible.delegate = self;
+
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self bringSubviewToFront:_maskView];
+    _maskView.frame = self.bounds;
 }
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
     [self __layoutChartFrame];
 }
+
 #pragma mark - ChartViewDelegate
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-result"
@@ -63,6 +75,11 @@ static int kKLMinVisibleEntryCount = 20;
 - (void)chartTranslated:(ChartViewBase *)chartView dX:(CGFloat)dX dY:(CGFloat)dY
 {
     [self syncChartsByTouchView:chartView];
+}
+
+- (void)chartWillDisplay:(ChartViewBase *)chartView
+{
+    [_maskView cleanDraw];
 }
 
 - (void)syncChartsByTouchView:(ChartViewBase *)chartView
@@ -126,6 +143,57 @@ static int kKLMinVisibleEntryCount = 20;
     self.helpChartView.data = dataVisible.helpChartData;
 }
 
+#pragma mark - 长按
+- (void)__longGesture:(UILongPressGestureRecognizer *)longGes
+{
+    CGPoint touchPoint = [longGes locationInView:self.mainChartView];
+    ChartHighlight *h = [self.mainChartView getHighlightByTouchPoint:touchPoint];
+    if (h== nil) return;
+    
+    CandleChartDataEntry *e;
+    
+    CandleChartDataSet *set = (CandleChartDataSet *)[self.mainChartView.data getDataSetByIndex:h.dataSetIndex];
+    if (set == nil || ![set isKindOfClass:[CandleChartDataSet class]]){
+        
+        set = (CandleChartDataSet *)self.mainChartView.candleData.dataSets.firstObject;
+        e = (CandleChartDataEntry *)[set entryForXValue:h.x closestToY:h.y];
+        
+    }else{
+        e = (CandleChartDataEntry *)[self.mainChartView.data entryForHighlight:h];
+    }
+    
+    NSArray<ChartDataRendererBase *> *subRenderers = [(CombinedChartRenderer *)self.mainChartView.renderer subRenderers];
+    CandleStickChartRenderer *candleRender;
+    for (ChartDataRendererBase *anRender in subRenderers){
+        if ([anRender isKindOfClass:[CandleStickChartRenderer class]]){
+            candleRender = (CandleStickChartRenderer *)anRender;
+        }
+    }
+    ChartTransformer *trans = [candleRender.dataProvider getTransformerForAxis:set.axisDependency];
+    
+    BOOL isCandleH = (set && [set isKindOfClass:[CandleChartDataSet class]]);
+    CGFloat xPos = e.x;
+    CGFloat barSpace =  isCandleH ? set.barSpace : 1.0;
+    CGRect r = (CGRect){xPos - 0.5 + barSpace,0,1.0 - 2.0*barSpace,1};
+    
+    
+    CGFloat barWidth = [trans ym_rectValueToPixel:r].size.width;
+    CGPoint pt;
+    if (isCandleH){
+        pt = [trans pixelForValuesWithX:e.x y:[(CandleChartDataEntry *)e close]];
+        _maskView->_highlightEntry = (CandleChartDataEntry *)e;
+    }else{
+        pt = [trans pixelForValuesWithX:e.x y:[(ChartDataEntry *)e y]];
+        barWidth = 1.0;
+        _maskView->_highlightEntry = nil;
+    }
+    
+    _maskView->_candleBarWidth = barWidth;
+    _maskView->_candleHighlightEntryPt = pt;
+    [_maskView setNeedsDisplay];
+}
+
+
 #pragma mark - 公有
 
 //高度
@@ -139,6 +207,9 @@ static int kKLMinVisibleEntryCount = 20;
 #pragma mark - 私有
 - (void)__loadUI
 {
+    _maskView = [[KLChartMaskView alloc] initWithFrame:self.bounds];
+    [self addSubview:_maskView];
+    
     _mainChartView = [[CombinedChartView alloc] initWithFrame:self.bounds];
     [self __initializeChartView:_mainChartView];
     

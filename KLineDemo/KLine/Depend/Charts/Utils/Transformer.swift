@@ -179,3 +179,18 @@ open class Transformer: NSObject
         return valueToPixelMatrix.inverted()
     }
 }
+
+extension Transformer
+{
+    @objc open func ym_rectValueToPixel(_ r: CGRect, phaseY: Double) -> CGRect
+    {
+        var r_in = r;
+        rectValueToPixel(&r_in, phaseY: phaseY)
+        return r_in
+    }
+    @objc open func ym_rectValueToPixel(_ r: CGRect) -> CGRect
+    {
+        let r_out = r.applying(valueToPixelMatrix)
+        return r_out;
+    }
+}
