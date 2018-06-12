@@ -181,13 +181,11 @@
     CGPoint pt;
     if (isCandleH){
         pt = [trans pixelForValuesWithX:e.x y:[(CandleChartDataEntry *)e close]];
-        _maskView->_highlightEntry = (CandleChartDataEntry *)e;
     }else{
         pt = [trans pixelForValuesWithX:e.x y:[(ChartDataEntry *)e y]];
         barWidth = 1.0;
-        _maskView->_highlightEntry = nil;
     }
-    
+    _maskView->_highlightEntry = e;
     _maskView->_candleBarWidth = barWidth;
     _maskView->_candleHighlightEntryPt = pt;
     [_maskView setNeedsDisplay];
